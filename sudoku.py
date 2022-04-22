@@ -1,12 +1,8 @@
 import os
 
 
-def afisare(lista):
-    for i in range(0, len(lista)):
-        if i % 3 == 0:
-            print(end=" ")
-        print(lista[i], end=" ")
-    print()
+def color_text(code):
+    return "\33[31m{code}".format(code=code)
 
 
 def tabla_de_sudoku():
@@ -19,18 +15,23 @@ def tabla_de_sudoku():
     return matrice
 
 
+def afisare(lista):
+    print(end="                                              ")
+    for i in range(0, len(lista)):
+        if i % 3 == 0:
+            print(end=" ")
+        print(color_text(lista[i]), end=" ")
+    print()  # printeaza o linie noua
+
+
 def afisare_tabla(matrice):
+    print("\n\n\n\n")
     for i in range(0, 9):
         if i % 3 == 0:
             print()
         afisare(matrice[i])
+
     print()
-
-
-def inserteaza_valoare(linie, coloana, valoare):
-    global tabla
-    if valoare <= 9 and valoare >= 1:
-        tabla[linie][coloana] = valoare
 
 
 def inserteaza_valoare_citita():
@@ -38,6 +39,12 @@ def inserteaza_valoare_citita():
     coloana = int(input("Coloana: "))
     valoare = int(input("Valoare: "))
     inserteaza_valoare(linie, coloana, valoare)
+
+
+def inserteaza_valoare(linie, coloana, valoare):
+    global tabla
+    if valoare <= 9 and valoare >= 1:
+        tabla[linie][coloana] = valoare
 
 
 def final_joc():
@@ -72,7 +79,9 @@ def tabla_valida():
     return True
 
 
+os.system("color")
 tabla = tabla_de_sudoku()
+afisare_tabla(tabla)
 
 while (not final_joc()):
     inserteaza_valoare_citita()
